@@ -1,1 +1,223 @@
+#Welcome! To win, kill all threats (boss and scouts) then, destroy the barrier and step on the red "X". 
+#Goals (counter)
+def onDefeat(event):
+    game.defeated += 1
 
+game.setActionFor("scout", "defeat", onDefeat)
+
+goal = game.addManualGoal("Defeat 25 scout.")
+ui.track(game, "defeated")
+
+
+
+def checkGoal():
+    if game.defeated > 25:
+        game.setGoalState(goal, True)
+    pass
+
+
+def onDefeat2(event):
+    game.defeated += 1
+
+
+
+game.setActionFor("ogre-f", "defeat", onDefeat2)
+game.spawnTime = 0
+
+goal2 = game.addManualGoal("Defeat 1 ogre-f.")
+ui.track(game, "defeated")
+
+def checkGoal2():
+    if game.defeated > 1:
+        game.setGoalState(goal2, True)
+    pass
+game.setActionFor("ogre-f", "defeat", checkGoal2)
+game.setActionFor("scout", "defeat", checkGoal)
+
+# Spawn a player with spawnPlayerXY()
+player = game.spawnPlayerXY("knight", 36, 30)
+player.maxSpeed = 20
+player.maxHealth = 5050
+player.attackDamage = 100
+ui.track(game, "time")
+
+#Spawn ogre-f (boss enemy)
+ogre = game.spawnXY("ogre-f", 46, 60)
+ogre.maxHealth = 4500
+ogre.attackDamage = 90
+ogre.maxSpeed = 15
+ogre.team = "scout"
+def onSpawn(event):
+    unit = event.target
+    while True:
+        enemy = unit.findNearestEnemy()
+        if enemy:
+            unit.attack(enemy)
+ogre.behavior = "AttacksNearest"
+game.setActionFor("ogre-f", "spawn", onSpawn)
+
+# Goals
+game.addSurviveGoal()
+game.addMoveGoalXY(70, 43)
+
+# Spawn maze
+game.spawnXY("fence", 31, 8)
+game.spawnXY("fence", 44, 8)
+game.spawnXY("fence", 31, 12)
+game.spawnXY("fence", 31, 16)
+game.spawnXY("fence", 31, 20)
+game.spawnXY("fence", 44, 12)
+game.spawnXY("fence", 44, 16)
+game.spawnXY("fence", 44, 20)
+game.spawnXY("fence", 44, 20)
+game.spawnXY("fence", 44, 20)
+game.spawnXY("fence", 48, 23)
+game.spawnXY("fence", 52, 24)
+game.spawnXY("fence", 56, 27)
+game.spawnXY("fence", 60, 32)
+game.spawnXY("fence", 65, 44)
+game.spawnXY("fence", 65, 42)
+game.spawnXY("fence", 65, 32)
+game.spawnXY("fence", 65, 36)
+game.spawnXY("fence", 69, 36)
+game.spawnXY("fence", 74, 36)
+game.spawnXY("fence", 73, 48)
+game.spawnXY("fence", 69, 48)
+game.spawnXY("fence", 65, 48)
+game.spawnXY("fence", 49, 65)
+game.spawnXY("fence", 53, 62)
+game.spawnXY("fence", 52, 63)
+game.spawnXY("fence", 53, 59)
+game.spawnXY("fence", 56, 56)
+game.spawnXY("fence", 56, 54)
+game.spawnXY("fence", 46, 65)
+game.spawnXY("fence", 43, 65)
+game.spawnXY("fence", 40, 65)
+game.spawnXY("fence", 37, 65)
+game.spawnXY("fence", 34, 65)
+game.spawnXY("fence", 31, 65)
+game.spawnXY("fence", 28, 65)
+game.spawnXY("fence", 24, 61)
+game.spawnXY("fence", 24, 58)
+game.spawnXY("fence", 20, 55)
+game.spawnXY("fence", 16, 52)
+game.spawnXY("fence", 15, 48)
+game.spawnXY("fence", 15, 45)
+game.spawnXY("fence", 15, 42)
+game.spawnXY("fence", 15, 39)
+game.spawnXY("fence", 15, 36)
+game.spawnXY("fence", 15, 33)
+game.spawnXY("fence", 15, 42)
+game.spawnXY("fence", 17, 29)
+game.spawnXY("fence", 20, 26)
+game.spawnXY("fence", 23, 24)
+game.spawnXY("fence", 27, 22)
+game.spawnXY("fence", 59, 52)
+game.spawnXY("fence", 62, 50)
+
+#Spawn generator
+generator = game.spawnXY("generator", 25, 54)
+generator.spawnType = "scout"
+generator.spawnDelay = 2
+"generator".spawnAI = "AttackNearest"
+generator.maxHealth = 100
+
+#Spawn generator
+generator2 = game.spawnXY("generator", 28, 31)
+generator2.spawnType = "scout"
+generator2.spawnDelay = 2
+"generator2".spawnAI = "AttackNearest"
+generator2.maxHealth = 100
+
+#Spawn generator
+generator3 = game.spawnXY("generator", 19, 46)
+generator3.spawnType = "scout"
+generator3.spawnDelay = 5
+"generator3".spawnAI = "AttackNearest"
+generator3.maxHealth = 100
+
+#Fire spewer
+trap = game.spawnXY("fire-spewer", 50, 44)
+trap.direction = "vertical"
+
+#Fire trap
+game.spawnXY("fire-trap", 61, 46)
+game.spawnXY("fire-trap", 27, 8)
+game.spawnXY("fire-trap", 27, 12)
+game.spawnXY("fire-trap", 27, 16)
+game.spawnXY("fire-trap", 27, 19)
+game.spawnXY("fire-trap", 23, 21)
+game.spawnXY("fire-trap", 19, 23)
+game.spawnXY("fire-trap", 16, 25)
+game.spawnXY("fire-trap", 13, 29)
+game.spawnXY("fire-trap", 11, 34)
+game.spawnXY("fire-trap", 11, 38)
+game.spawnXY("fire-trap", 11, 42)
+game.spawnXY("fire-trap", 11, 46)
+game.spawnXY("fire-trap", 11, 50)
+game.spawnXY("fire-trap", 13, 55)
+game.spawnXY("fire-trap", 16, 59)
+game.spawnXY("fire-trap", 20, 62)
+game.spawnXY("fire-trap", 20, 65)
+game.spawnXY("fire-trap", 48, 8)
+game.spawnXY("fire-trap", 48, 12)
+game.spawnXY("fire-trap", 48, 16)
+game.spawnXY("fire-trap", 48, 20)
+game.spawnXY("fire-trap", 52, 21)
+game.spawnXY("fire-trap", 56, 24)
+game.spawnXY("fire-trap", 60, 28)
+game.spawnXY("fire-trap", 64, 28)
+game.spawnXY("fire-trap", 69, 32)
+game.spawnXY("fire-trap", 74, 32)
+game.spawnXY("fire-trap", 57, 65)
+game.spawnXY("fire-trap", 57, 62)
+game.spawnXY("fire-trap", 63, 57)
+game.spawnXY("fire-trap", 66, 55)
+game.spawnXY("fire-trap", 69, 55)
+game.spawnXY("fire-trap", 73, 55)
+game.spawnXY("fire-trap", 60, 59)
+
+
+#potions
+game.spawnXY("potion-large", 39, 22)
+game.spawnXY("potion-large", 24, 31)
+game.spawnXY("potion-large", 30, 62)
+
+#mushroom 
+game.powerDuration = 10
+game.powerEndTime = 0
+
+game.spawnXY("mushroom", 44, 27)
+game.spawnXY("mushroom", 20, 38)
+game.spawnXY("mushroom", 37, 61)
+def onCollect(event):
+    unit = event.target
+    item = event.other
+    if item.type == "mushroom":
+        unit.scale = 2
+        game.powerEndTime = game.time + game.powerDuration
+        unit.say("WOAHH")
+
+def onCollide(event):
+    unit = event.target
+    collidedObject = event.other
+    if collidedObject.type == "fence":
+        if unit.scale == 2:
+            collidedObject.destroy()
+            pass
+
+player.on("collide", onCollide)
+player.on("collect", onCollect)
+
+#GOAL(Chest)
+game.spawnXY("chest", 75, 43)
+
+#Time
+def checkTimers():
+    if game.time > game.powerEndTime:
+        if player.scale == 2:
+            player.scale = 1
+    pass
+
+while True:
+    checkTimers()
